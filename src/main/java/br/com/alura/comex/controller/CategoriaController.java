@@ -2,6 +2,7 @@ package br.com.alura.comex.controller;
 
 
 import br.com.alura.comex.dto.CategoriaDto;
+import br.com.alura.comex.dto.PedidoPorCategoriaDto;
 import br.com.alura.comex.form.CategoriaForm;
 import br.com.alura.comex.model.Categoria;
 import br.com.alura.comex.repositories.CategoriaRepository;
@@ -39,6 +40,11 @@ public class CategoriaController {
     public List<CategoriaDto> list() {
         List<Categoria> categorias = this.categoriaRepository.findAll();
         return CategoriaDto.converter(categorias);
+    }
+
+    @GetMapping("/pedidos")
+    public List<PedidoPorCategoriaDto> listPedidosPorCategoria() {
+        return this.categoriaRepository.findPedidosPorCategoria();
     }
 
 }
