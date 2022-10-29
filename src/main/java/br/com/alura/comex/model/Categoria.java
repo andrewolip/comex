@@ -1,5 +1,7 @@
 package br.com.alura.comex.model;
 
+import br.com.alura.comex.dto.CategoriaDto;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -68,6 +70,10 @@ public class Categoria {
     public void adicionaProduto(Produto produto){
         produto.setCategoria(this);
         this.produtos.add(produto);
+    }
+
+    public CategoriaDto converter() {
+        return new CategoriaDto(this.nome, this.status);
     }
 
 }

@@ -1,6 +1,8 @@
 package br.com.alura.comex.model;
 
 
+import br.com.alura.comex.dto.ProdutoDto;
+
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -35,6 +37,13 @@ public class Produto {
     private Categoria categoria;
 
     public Produto(){
+    }
+
+    public Produto(String nome, String descricao, BigDecimal precoUnitario, int quantidadeEstoque) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.precoUnitario = precoUnitario;
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 
     public Long getId() {
@@ -83,6 +92,10 @@ public class Produto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public ProdutoDto converter() {
+        return new ProdutoDto(this.nome, this.descricao, this.precoUnitario, this.quantidadeEstoque, this.categoria.getId(), this.categoria.getNome());
     }
 
 }
