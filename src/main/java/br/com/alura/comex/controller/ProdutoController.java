@@ -50,7 +50,7 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public List<ProdutoDto> list(@RequestParam("page") @DefaultValue("0") Integer page) {
+    public List<ProdutoDto> list(@RequestParam(value = "page", defaultValue = "1") Integer page) {
         Pageable sortedByName = PageRequest.of(page, 5, Sort.by("nome"));
         return produtoRepository.findAll(sortedByName).stream()
                 .map(Produto::converter)
