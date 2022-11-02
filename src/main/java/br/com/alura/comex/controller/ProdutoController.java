@@ -6,10 +6,15 @@ import br.com.alura.comex.model.Categoria;
 import br.com.alura.comex.model.Produto;
 import br.com.alura.comex.repositories.CategoriaRepository;
 import br.com.alura.comex.repositories.ProdutoRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +40,12 @@ public class ProdutoController {
         this.categoriaRepository = categoriaRepository;
     }
 
+    @Operation(summary = "${produto.save}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) }),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) }),
+            @ApiResponse(responseCode = "500", description = "Internal Error", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) })
+    })
     @PostMapping
     public ResponseEntity<ProdutoDto> save(@RequestBody ProdutoForm produtoForm, UriComponentsBuilder uriComponentsBuilder) {
         Categoria categoria = categoriaRepository.findById(produtoForm.categoriaId())
@@ -49,6 +60,12 @@ public class ProdutoController {
         return ResponseEntity.created(uri).body(produto.converter());
     }
 
+    @Operation(summary = "${produto.list}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) }),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) }),
+            @ApiResponse(responseCode = "500", description = "Internal Error", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) })
+    })
     @GetMapping
     public List<ProdutoDto> list(@RequestParam(value = "page", defaultValue = "1") Integer page) {
         Pageable sortedByName = PageRequest.of(page, 5, Sort.by("nome"));
