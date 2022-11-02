@@ -1,17 +1,17 @@
 package br.com.alura.comex.controller;
 
 
-import br.com.alura.comex.dto.CategoriaDto;
-import br.com.alura.comex.dto.PedidoPorCategoriaDto;
-import br.com.alura.comex.form.CategoriaForm;
 import br.com.alura.comex.model.Categoria;
+import br.com.alura.comex.dto.CategoriaDto;
+import br.com.alura.comex.dto.CategoriaForm;
+import br.com.alura.comex.dto.PedidoPorCategoriaDto;
 import br.com.alura.comex.repositories.CategoriaRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +62,7 @@ public class CategoriaController {
         return CategoriaDto.converter(categorias);
     }
 
+    @Cacheable(value = "pedidosPorCategoria")
     @Operation(summary = "${categoria.listPedidosPorCategoria}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) }),

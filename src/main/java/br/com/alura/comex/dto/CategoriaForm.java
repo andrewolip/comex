@@ -1,7 +1,7 @@
-package br.com.alura.comex.form;
+package br.com.alura.comex.dto;
 
-import br.com.alura.comex.model.Categoria;
 import br.com.alura.comex.model.StatusCategoria;
+import br.com.alura.comex.model.Categoria;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Min;
